@@ -1,0 +1,5 @@
+region= "ap-south-1"
+access_key = "AKIATXQE4DXOTAMTNFEF"
+secret_key = "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"
+region = "ap-south-1"
+cidr_block = "10.0.0.0/16"
