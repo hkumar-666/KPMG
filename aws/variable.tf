@@ -5,12 +5,12 @@ variable "region" {
 
 variable "access_key" {
   description = "AWS region to create VPC"
-  default     = "AKIATXQE4DXOTAMTNFEF"
+  default     = "AKIATQGOFGYH6WKDBXP5"
 } 
 
 variable "secret_key" {
   description = "AWS region to create VPC"
-  default     = "fccKmIriVqd6sSgjXSea6ntI/Tb96ySZGAksDx7d"
+  default     = "aNArx9wSjk6YNbYrDm3GQtHwF4LAK5GZxwSNsE7C"
 } 
 
 variable "vpc_cidr_block" {
