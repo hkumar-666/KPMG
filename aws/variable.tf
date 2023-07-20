@@ -60,7 +60,7 @@ variable "rds_name" {
 
 variable "rds_username" {
   description = "Username of the RDS"
-  default     = "mysql_terraform"
+  default     = "admin"
 }
 
 variable "rds_password" {
@@ -75,7 +75,7 @@ variable "websg_name" {
 
 variable "web_ami" {
   description = "AMI of webservers"
-  default     = "ami-e0ba5c83"
+  default     = "ami-008b85aa3ff5c1b02"
 }
 
 variable "web_instance" {

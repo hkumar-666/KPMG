@@ -78,10 +78,10 @@ resource "aws_route_table" "public" {
     cidr_block = "0.0.0.0/0"
     gateway_id = "${aws_internet_gateway.default.id}"
   }
-
+/*
   tags {
     Name = "Public"
-  }
+  } */
 }
 
 resource "aws_route_table_association" "public" {
@@ -92,7 +92,7 @@ resource "aws_route_table_association" "public" {
 
 # Create Elastic IP for NAT gateway
 resource "aws_eip" "nat_eip" {
-  vpc = true
+  #vpc = true
 
   tags = {
     Name = "Nat Gateway IP"
@@ -118,10 +118,10 @@ resource "aws_route_table" "web" {
     cidr_block = "0.0.0.0/0"
     gateway_id = "${aws_internet_gateway.default.id}"
   }
-
+/*
   tags {
     Name = "Web"
-  }
+  } */
 }
 
 resource "aws_route_table_association" "web" {
@@ -139,10 +139,10 @@ resource "aws_route_table" "app" {
     cidr_block = "0.0.0.0/0"
     gateway_id = "${aws_nat_gateway.default.id}"
   }
-
+/*
   tags {
     Name = "App"
-  }
+  } */
 }
 
 resource "aws_route_table_association" "app" {
@@ -160,10 +160,10 @@ resource "aws_route_table" "db" {
     cidr_block = "0.0.0.0/0"
     gateway_id = "${aws_nat_gateway.default.id}"
   }
-
+/*
   tags {
     Name = "DB"
-  }
+  } */
 }
 
 resource "aws_route_table_association" "db" {
@@ -177,10 +177,10 @@ resource "aws_route_table_association" "db" {
 resource "aws_db_subnet_group" "rds_subnet_group" {
   name       = "${var.rds_subnet_name}"
   subnet_ids = ["${aws_subnet.db.*.id}"]
-
+/*
   tags {
     Name = "${var.rds_subnet_name}"
-  }
+  } */
 }
 
 # Create RDS instance 
@@ -189,11 +189,11 @@ resource "aws_db_instance" "rds" {
   allocated_storage    = "${var.rds_storage}"
   engine               = "${var.rds_engine}"
   instance_class       = "${var.rds_instance_class}"
-  name                 = "${var.rds_name}"
+  db_name              = "${var.rds_name}"
   username             = "${var.rds_username}"
   password             = "${var.rds_password}"
   db_subnet_group_name = "${var.rds_subnet_name}"
-  depends_on = ["aws_db_subnet_group.rds_subnet_group"]
+  depends_on = [aws_db_subnet_group.rds_subnet_group]
 }
 
 # Create security group for webservers
@@ -216,10 +216,10 @@ resource "aws_security_group" "webserver_sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
+/*
   tags {
     Name = "${var.websg_name}"
-  }
+  } */
 }
 
 # Create EC2 instances for webservers
@@ -230,10 +230,10 @@ resource "aws_instance" "webservers" {
   instance_type   = "${var.web_instance}"
   security_groups = ["${aws_security_group.webserver_sg.id}"]
   subnet_id       = "${element(aws_subnet.web.*.id,count.index)}"
-
+/*
   tags {
     Name = "${element(var.webserver_name,count.index)}"
-  }
+  } */
 }
 
 # Creating application load balancer
@@ -243,10 +243,10 @@ resource "aws_lb" "weblb" {
   load_balancer_type = "application"
   security_groups    = ["${aws_security_group.webserver_sg.id}"]
   subnets            = ["${aws_subnet.web.*.id}"]
-
+/*
   tags {
     Name = "${var.lb_name}"
-  }
+  } */
 }
 
 # Creating load balancer target group
@@ -281,9 +281,10 @@ resource "aws_lb_listener_rule" "allow_all" {
     type             = "forward"
     target_group_arn = "${aws_lb_target_group.alb_group.arn}"
   }
-
+  
   condition {
-    field  = "path-pattern"
-    values = ["*"]
-  }
+    path-pattern{
+    values = ["/static/*"]
+    }
+  } 
 }
