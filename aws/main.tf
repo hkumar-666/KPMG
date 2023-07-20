@@ -1,5 +1,7 @@
 provider "aws" {
-  profile = "default"
+  #profile = "default"
+  access_key = "${var.access_key}"
+  secret_key= "${var.secret_key}"
   region  = "${var.region}"
 }
 
@@ -281,10 +283,15 @@ resource "aws_lb_listener_rule" "allow_all" {
     type             = "forward"
     target_group_arn = "${aws_lb_target_group.alb_group.arn}"
   }
-  
+  /*
   condition {
     path-pattern{
     values = ["/static/*"]
     }
-  } 
+  } */
+  condition {
+    path_pattern {
+      values = ["/static/*"]
+    }
+  }
 }

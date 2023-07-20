@@ -3,6 +3,16 @@ variable "region" {
   default     = "ap-south-1"
 }
 
+variable "access_key" {
+  description = "AWS region to create VPC"
+  default     = "AKIATXQE4DXOTAMTNFEF"
+} 
+
+variable "secret_key" {
+  description = "AWS region to create VPC"
+  default     = "fccKmIriVqd6sSgjXSea6ntI/Tb96ySZGAksDx7d"
+} 
+
 variable "vpc_cidr_block" {
   description = "CIDR block for VPC"
   default     = "10.0.0.0/16"
