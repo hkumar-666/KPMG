@@ -178,7 +178,7 @@ resource "aws_route_table_association" "db" {
 
 resource "aws_db_subnet_group" "rds_subnet_group" {
   name       = "${var.rds_subnet_name}"
-  subnet_ids = ["${aws_subnet.db.*.id}"]
+  subnet_ids = "${aws_subnet.db.*.id}"
 /*
   tags {
     Name = "${var.rds_subnet_name}"
@@ -244,7 +244,7 @@ resource "aws_lb" "weblb" {
   name               = "${var.lb_name}"
   load_balancer_type = "application"
   security_groups    = ["${aws_security_group.webserver_sg.id}"]
-  subnets            = ["${aws_subnet.web.*.id}"]
+  subnets            = "${aws_subnet.web.*.id}"
 /*
   tags {
     Name = "${var.lb_name}"
