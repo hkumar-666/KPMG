@@ -175,7 +175,9 @@ resource "aws_route_table_association" "db" {
 }
 
 # Create RDS subnet group
-
+data "aws_subnet" "rds_subnet_name" {
+  id = "rds_group"
+}
 resource "aws_db_subnet_group" "rds_subnet_group" {
   name       = "${var.rds_subnet_name}"
   subnet_ids = "${aws_subnet.db.*.id}"
