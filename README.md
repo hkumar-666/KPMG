@@ -7,7 +7,7 @@ terraform init
 After initialisation has been done, you can proceed to running the "main.tf" file with the following command:
 
 terraform apply
-
+#terraform lifecycle
 The code does the following:
 
 1.Creates a VPC with the CIDR block provided in the region you want.
